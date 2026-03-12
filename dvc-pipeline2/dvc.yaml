@@ -1,0 +1,56 @@
+# dvc.yaml
+# ─────────────────────────────────────────────────────────────
+# All paths use ../ because data/ and models/ are in the
+# MAIN folder, one level above dvc-pipeline/
+#
+# Run from inside dvc-pipeline/:
+#   cd dvc-pipeline
+#   dvc repro
+# ─────────────────────────────────────────────────────────────
+
+stages:
+
+  # ── STAGE 1: Preprocess ──────────────────────────────────────
+  preprocess:
+    cmd: python src/1_preprocess.py
+    deps:
+      - src/1_preprocess.py
+      - ../data/FraudTrain.csv
+      - ../data/FraudTest.csv
+    params:
+      - preprocess
+      - data
+    outs:
+      - ../data/processed_train.csv
+      - ../data/processed_test.csv
+
+  # ── STAGE 2: Train ───────────────────────────────────────────
+  train:
+    cmd: python src/2_train.py
+    deps:
+      - src/2_train.py
+      - ../data/processed_train.csv
+      - ../data/processed_test.csv
+    params:
+      - train
+    outs:
+      - ../models/random_forest.pkl
+      - ../models/xgboost.pkl
+      - ../models/scaler.pkl
+      - ../data/X_test_scaled.csv
+      - ../data/y_test.csv
+
+  # ── STAGE 3: Evaluate ────────────────────────────────────────
+  evaluate:
+    cmd: python src/3_evaluate.py
+    deps:
+      - src/3_evaluate.py
+      - ../models/random_forest.pkl
+      - ../models/xgboost.pkl
+      - ../data/X_test_scaled.csv
+      - ../data/y_test.csv
+    params:
+      - evaluate
+    metrics:
+      - ../metrics/scores.json:
+          cache: false

@@ -1,0 +1,56 @@
+# params.yaml
+# ─────────────────────────────────────────────────────────────
+# Your folder structure:
+#
+#   ML-SERVING-FOR-FRAUDE/
+#   ├── data/              ← CSV files live HERE (main folder)
+#   │   ├── FraudTrain.csv
+#   │   └── FraudTest.csv
+#   └── dvc-pipeline/      ← you run dvc repro FROM HERE
+#       ├── params.yaml    ← this file
+#       ├── dvc.yaml
+#       └── src/
+#
+# Since data/ is ONE LEVEL UP from dvc-pipeline/,
+# all data paths start with ../data/
+# ─────────────────────────────────────────────────────────────
+
+data:
+  train_path: ../data/FraudTrain.csv
+  test_path: ../data/FraudTest.csv
+  processed_train: ../data/processed_train.csv
+  processed_test: ../data/processed_test.csv
+  X_test_scaled: ../data/X_test_scaled.csv
+  y_test: ../data/y_test.csv
+  models_dir: ../models
+  metrics_dir: ../metrics
+
+preprocess:
+  cols_to_drop:
+    - "Unnamed: 0"
+    - cc_num
+    - first
+    - last
+    - street
+    - trans_num
+  cat_cols:
+    - merchant
+    - category
+    - gender
+    - city
+    - state
+    - job
+  current_year: 2026
+
+train:
+  random_state: 42
+  smote: true
+  random_forest:
+    n_estimators: 100
+    random_state: 42
+  xgboost:
+    n_estimators: 100
+    learning_rate: 0.1
+
+evaluate:
+  xgb_threshold: 0.3
