@@ -26,7 +26,7 @@ from imblearn.over_sampling import SMOTE
 import xgboost as xgb
 
 # ── Load params ───────────────────────────────────────────────
-with open("params.yaml") as f:
+with open("params.yaml", encoding="utf-8") as f:
     params = yaml.safe_load(f)
 
 PROCESSED_TRAIN = params["data"]["processed_train"]
