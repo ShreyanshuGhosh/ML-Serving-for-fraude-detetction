@@ -19,7 +19,8 @@ import os
 from sklearn.preprocessing import LabelEncoder
 
 # ── Load params ───────────────────────────────────────────────
-with open("params.yaml") as f:
+with open("params.yaml", encoding="utf-8") as f:
+    
     params = yaml.safe_load(f)
 
 TRAIN_PATH       = params["data"]["train_path"]

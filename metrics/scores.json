@@ -1,0 +1,11 @@
+{
+  "rf_precision_fraud": 0.5883,
+  "rf_recall_fraud": 0.6914,
+  "rf_f1_fraud": 0.6357,
+  "rf_roc_auc": 0.8448,
+  "xgb_precision_fraud": 0.0555,
+  "xgb_recall_fraud": 0.9287,
+  "xgb_f1_fraud": 0.1048,
+  "xgb_roc_auc": 0.978,
+  "xgb_threshold": 0.3
+}

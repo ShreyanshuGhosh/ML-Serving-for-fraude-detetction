@@ -30,7 +30,7 @@ from sklearn.metrics import (
 )
 
 # ── Load params ───────────────────────────────────────────────
-with open("params.yaml") as f:
+with open("params.yaml", encoding="utf-8") as f:
     params = yaml.safe_load(f)
 
 X_TEST_SCALED   = params["data"]["X_test_scaled"]
